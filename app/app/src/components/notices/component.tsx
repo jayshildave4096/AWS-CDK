@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { connect, useDispatch } from "react-redux"
+import { connect } from "react-redux"
 import { RootState } from "../../redux"
-import { Card, CardContent, CardHeader, Button, Grid, TextField, Input, Typography, ListItem, List } from "@mui/material"
+import { Card, CardContent, Button, Grid, Input, Typography} from "@mui/material"
 import axios from "axios"
 
 const mapStateToProps = (state:RootState) => {
@@ -13,10 +13,10 @@ export type Notice = {
 };
 
 
-const Notices= (props) => {
+const Notices= () => {
     const [univData, setunivData] = useState({})
     const [feedback, setFeedback] = useState([])
-    const dispatch = useDispatch()
+    
     const API_URL = 'https://fj2gsuxxb1.execute-api.us-east-1.amazonaws.com/prod'
     
     // runs once when page loads for the first time
@@ -33,8 +33,9 @@ const Notices= (props) => {
         
     },[])
 
-    const handleSubmit = (e) =>{
-        const value = document.getElementById("text-box").value
+    const handleSubmit = () =>{
+        const ele = document.getElementById("text-box")
+        const value = ele !== null ? ele.value : null // @ts-nocheck.
         // todo change Id to be random number in string 
         axios.post(API_URL  + '/notices', JSON.stringify({"id":"2", "title": value})).then((res)=> {
             console.log(res)
